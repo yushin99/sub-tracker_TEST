@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="구독 서비스를 한눈에 관리하는 간단한 대시보드">
+  <title>김유신의 구독 정리함</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">SUBSCRIPTION TRACKER</p>
+        <h1>김유신의 구독 정리함</h1>
+        <p class="subtitle">매달 빠져나가는 돈을 가볍게 정리해 보세요.</p>
+      </div>
+      <button class="button button-primary topbar-action" type="button" data-scroll-to-form>+ 구독 추가</button>
+    </header>
+
+    <section class="summary-grid" aria-label="지출 요약">
+      <article class="summary-card summary-card-main">
+        <span class="summary-label">월 예상 지출</span>
+        <strong id="monthly-total">0원</strong>
+        <span class="summary-note">월 결제와 연간 결제를 월 기준으로 환산</span>
+      </article>
+      <article class="summary-card">
+        <span class="summary-label">연간 예상 지출</span>
+        <strong id="yearly-total">0원</strong>
+        <span class="summary-note">현재 등록된 구독 기준</span>
+      </article>
+      <article class="summary-card summary-card-alert">
+        <span class="summary-label">이번 주 결제 예정</span>
+        <strong id="upcoming-count">0건</strong>
+        <span class="summary-note" id="upcoming-total">결제 예정 금액 0원</span>
+      </article>
+    </section>
+
+    <div class="content-grid">
+      <section class="panel subscriptions-panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">MY SERVICES</p>
+            <h2>내 구독</h2>
+          </div>
+          <span class="count-badge" id="subscription-count">0개</span>
+        </div>
+        <div class="subscription-list" id="subscription-list" aria-live="polite"></div>
+      </section>
+
+      <aside class="side-column">
+        <section class="panel form-panel" id="form-panel">
+          <div class="section-heading compact-heading">
+            <div>
+              <p class="eyebrow">NEW ENTRY</p>
+              <h2 id="form-title">새 구독 추가</h2>
+            </div>
+          </div>
+          <form id="subscription-form">
+            <input type="hidden" id="editing-id">
+            <label for="name">서비스 이름</label>
+            <input id="name" name="name" type="text" placeholder="예: 넷플릭스" required maxlength="40">
+
+            <div class="form-row">
+              <div>
+                <label for="amount">금액</label>
+                <input id="amount" name="amount" type="number" min="0" step="1" placeholder="13,500" required>
+              </div>
+              <div>
+                <label for="cycle">결제 주기</label>
+                <select id="cycle" name="cycle">
+                  <option value="monthly">매월</option>
+                  <option value="yearly">매년</option>
+                </select>
+              </div>
+            </div>
+
+            <label for="next-payment-date">다음 결제일</label>
+            <input id="next-payment-date" name="nextPaymentDate" type="date" required>
+
+            <label for="category">카테고리</label>
+            <input id="category" name="category" type="text" placeholder="예: 영상" maxlength="20" required>
+
+            <label for="payment-method">결제 수단 <span class="optional">선택</span></label>
+            <input id="payment-method" name="paymentMethod" type="text" placeholder="예: 신한카드" maxlength="30">
+
+            <div class="form-actions">
+              <button class="button button-primary" id="save-button" type="submit">구독 저장</button>
+              <button class="button button-ghost hidden" id="cancel-button" type="button">취소</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel category-panel">
+          <div class="section-heading compact-heading">
+            <div>
+              <p class="eyebrow">SPENDING MIX</p>
+              <h2>카테고리별 비중</h2>
+            </div>
+          </div>
+          <div id="category-chart" class="category-chart" aria-live="polite"></div>
+        </section>
+      </aside>
+    </div>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/logic.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
